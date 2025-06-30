@@ -1,6 +1,6 @@
 // src/config/swagger.config.ts
 
-import { DocumentBuilder, SwaggerCustomOptions } from "@nestjs/swagger";
+import { DocumentBuilder } from "@nestjs/swagger";
 import { SwaggerTheme, SwaggerThemeNameEnum } from "swagger-themes";
 
 export const swaggerConfig = new DocumentBuilder()
@@ -21,7 +21,7 @@ export const swaggerConfig = new DocumentBuilder()
 
 const theme = new SwaggerTheme();
 
-export const swaggerCustomOptions: SwaggerCustomOptions = {
+export const swaggerCustomOptions = {
   customCss: theme.getBuffer(SwaggerThemeNameEnum.DRACULA),
   customSiteTitle: "Law Firm apis",
 };
