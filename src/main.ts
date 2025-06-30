@@ -1,10 +1,9 @@
 import { NestFactory } from "@nestjs/core";
 import { AppModule } from "./app.module";
-import { GlobalPermissionGuard } from "./common/guards/global-permission.guard";
+
 import { SwaggerModule } from "@nestjs/swagger";
 import * as swaggerUi from "swagger-ui-express";
 import { swaggerConfig, swaggerCustomOptions } from "./config/swagger.config";
-import { AuditInterceptor } from "./modules/audit/interceptors/audit.interceptor";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
