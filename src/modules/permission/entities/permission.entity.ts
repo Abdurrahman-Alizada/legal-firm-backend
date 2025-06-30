@@ -4,7 +4,7 @@ import { Column, CreateDateColumn, Entity, ObjectIdColumn } from "typeorm";
 
 @Entity("permissions")
 export class Permission {
-  @ObjectIdColumn() id: ObjectId;
+  @ObjectIdColumn() _id: ObjectId;
 
   @Column() name: string; // "Create Driver"
   @Column() code: string; // "drivers:create"

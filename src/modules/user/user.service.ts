@@ -21,7 +21,7 @@ export class UserService {
 
   async getUserRoleWithPermissions(roleId: string) {
     const role = await this.roleRepo.findOne({
-      where: { id: new ObjectId(roleId) },
+      where: { _id: new ObjectId(roleId) },
     });
 
     if (!role) throw new Error("Role not found");

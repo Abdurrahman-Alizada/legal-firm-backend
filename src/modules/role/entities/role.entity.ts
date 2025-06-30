@@ -1,14 +1,15 @@
 import { ObjectId } from "mongodb";
 import { Column, CreateDateColumn, Entity, ObjectIdColumn } from "typeorm";
 
-@Entity('roles')
+@Entity("roles")
 export class Role {
-  @ObjectIdColumn() id: ObjectId;
+  @ObjectIdColumn() _id: ObjectId;
 
-  @Column() name: string;             // e.g., "Admin", "Fleet Manager"
+  @Column() name: string; // e.g., "Admin", "Fleet Manager"
   @Column() description: string;
+  @Column() isSignUpAllowed: boolean;
 
-  @Column('array') permissionIds: string[]; // ObjectIDs of Permission
+  @Column("array") permissionIds: string[]; // ObjectIDs of Permission
 
   @CreateDateColumn() createdAt: Date;
 }

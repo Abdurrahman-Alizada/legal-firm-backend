@@ -22,6 +22,6 @@ export const swaggerConfig = new DocumentBuilder()
 const theme = new SwaggerTheme();
 
 export const swaggerCustomOptions = {
-  customCss: theme.getBuffer(SwaggerThemeNameEnum.DRACULA),
+  customCss: theme.getBuffer(SwaggerThemeNameEnum.ONE_DARK),
   customSiteTitle: "Law Firm apis",
 };

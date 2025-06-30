@@ -8,10 +8,23 @@ import { Permission } from "../permission/entities/permission.entity";
 import { APP_GUARD } from "@nestjs/core";
 import { GlobalPermissionGuard } from "src/common/guards/global-permission.guard";
 import { UserModule } from "../user/user.module";
+import { PassportModule } from "@nestjs/passport";
+import { JwtModule } from "@nestjs/jwt";
+import { JwtStrategy } from "src/common/strategies/jwt.strategy";
+import { JwtAuthGuard } from "src/common/guards/jwt.guard";
 
 @Module({
-  imports: [UserModule, TypeOrmModule.forFeature([Permission, Role])],
+  imports: [
+    PassportModule,
+    JwtModule.register({
+      secret: process.env.JWT_SECRET,
+      signOptions: { expiresIn: "1d" },
+    }),
+    UserModule,
+    TypeOrmModule.forFeature([Permission, Role]),
+  ],
+  providers: [AuthService, GlobalPermissionGuard, JwtAuthGuard, JwtStrategy],
   controllers: [AuthController],
-  providers: [AuthService, GlobalPermissionGuard],
+  exports: [AuthService],
 })
 export class AuthModule {}
