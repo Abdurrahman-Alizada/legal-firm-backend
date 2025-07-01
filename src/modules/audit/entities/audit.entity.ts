@@ -3,7 +3,7 @@ import { Column, CreateDateColumn, Entity, ObjectIdColumn } from "typeorm";
 
 @Entity("audit")
 export class Audit {
-  @ObjectIdColumn() id: ObjectId;
+  @ObjectIdColumn() _id: ObjectId;
 
   @Column() userId: string;
   @Column() action: string;

@@ -1,34 +1,23 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { RoleService } from './role.service';
-import { CreateRoleDto } from './dto/create-role.dto';
-import { UpdateRoleDto } from './dto/update-role.dto';
+import { Controller, ForbiddenException, Get } from "@nestjs/common";
+import { RoleService } from "./role.service";
+import { AllRoleDto } from "./dto/all-role.dto";
 
-@Controller('role')
+import { Public } from "src/common/decorators/public.decorator";
+import { ApiResponse } from "src/types";
+
+@Controller("role")
 export class RoleController {
   constructor(private readonly roleService: RoleService) {}
 
-  @Post()
-  create(@Body() createRoleDto: CreateRoleDto) {
-    return this.roleService.create(createRoleDto);
+  @Public()
+  @Get("/registerable")
+  async getSignupRoles(): Promise<ApiResponse<AllRoleDto[]>> {
+    return this.roleService.findSignupRoles();
   }
 
-  @Get()
-  findAll() {
-    return this.roleService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.roleService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateRoleDto: UpdateRoleDto) {
-    return this.roleService.update(+id, updateRoleDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.roleService.remove(+id);
+  @Public()
+  @Get("/inviteable")
+  async getInviteRoles(): Promise<ApiResponse<AllRoleDto[]>> {
+    return this.roleService.findInviteRoles();
   }
 }

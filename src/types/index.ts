@@ -66,3 +66,21 @@ export enum PermissionCode {
 export enum RouteType {
   IS_PUBLIC = "IS_PUBLIC",
 }
+
+export enum CompanyType {
+  LAW = "law",
+  CLIENT = "client",
+}
+
+export enum RoleName {
+  CLIENT = "Client",
+  LAWYER = "Law Firm Admin",
+  PARALEGAL = "Paralegal",
+  SECRETARY = "Secretary",
+  ADMIN = "Admin",
+}
+
+export interface ApiResponse<T> {
+  data: T;
+  message: string;
+}

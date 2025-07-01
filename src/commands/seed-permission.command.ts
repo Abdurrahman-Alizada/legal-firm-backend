@@ -52,6 +52,7 @@ export class SeedPermissionsCommand extends CommandRunner {
           name: roleSeed.name,
           description: roleSeed.description,
           isSignUpAllowed: roleSeed.isSignUpAllowed,
+          isInviteable: roleSeed.isInviteable,
           permissionIds: rolePermissions.map((p) => p._id.toString()),
         });
         await this.roleRepo.save(newRole);

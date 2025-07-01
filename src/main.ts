@@ -1,5 +1,5 @@
+import "reflect-metadata";
 import { NestFactory } from "@nestjs/core";
-import { CommandFactory } from "nest-commander";
 import { SwaggerModule } from "@nestjs/swagger";
 import * as swaggerUi from "swagger-ui-express";
 import { swaggerConfig, swaggerCustomOptions } from "./config/swagger.config";

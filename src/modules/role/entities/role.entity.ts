@@ -8,8 +8,9 @@ export class Role {
   @Column() name: string; // e.g., "Admin", "Fleet Manager"
   @Column() description: string;
   @Column() isSignUpAllowed: boolean;
+  @Column() isInviteable: boolean;
 
-  @Column("array") permissionIds: string[]; // ObjectIDs of Permission
+  @Column("array") permissionIds: ObjectId[]; // ObjectIDs of Permission
 
   @CreateDateColumn() createdAt: Date;
 }

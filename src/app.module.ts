@@ -11,13 +11,16 @@ import { Role } from "./modules/role/entities/role.entity";
 import { GlobalPermissionGuard } from "./common/guards/global-permission.guard";
 import { AuditInterceptor } from "./modules/audit/interceptors/audit.interceptor";
 import { AuditModule } from "./modules/audit/audit.module";
-import { APP_GUARD, APP_INTERCEPTOR } from "@nestjs/core";
+import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR } from "@nestjs/core";
 import { Audit } from "./modules/audit/entities/audit.entity";
 import { User } from "./modules/user/entities/user.entity";
 import { CliModule } from "./modules/cli/cli.module";
 import { DataSource } from "typeorm";
 import { JwtAuthGuard } from "./common/guards/jwt.guard";
 import { ConfigModule } from "@nestjs/config";
+import { CompanyModule } from "./modules/company/company.module";
+import { CompanyGuard } from "./common/guards/company.guard";
+import { AllExceptionsFilter } from "./common/filters/all-exception.filter";
 
 @Module({
   imports: [
@@ -32,6 +35,7 @@ import { ConfigModule } from "@nestjs/config";
     UserModule,
     RoleModule,
     PermissionModule,
+    CompanyModule,
   ],
   controllers: [],
   providers: [
@@ -48,6 +52,14 @@ import { ConfigModule } from "@nestjs/config";
       provide: APP_GUARD,
       useClass: JwtAuthGuard,
     },
+    {
+      provide: APP_FILTER,
+      useClass: AllExceptionsFilter,
+    },
+    // {
+    //   provide: APP_GUARD,
+    //   useClass: CompanyGuard,
+    // },
   ],
   exports: [],
 })

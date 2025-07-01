@@ -1,26 +1,37 @@
-import { Injectable } from '@nestjs/common';
-import { CreateRoleDto } from './dto/create-role.dto';
-import { UpdateRoleDto } from './dto/update-role.dto';
+import { Injectable } from "@nestjs/common";
+import { CreateRoleDto } from "./dto/create-role.dto";
+import { UpdateRoleDto } from "./dto/update-role.dto";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Role } from "./entities/role.entity";
+import { MongoRepository } from "typeorm";
+import { AllRoleDto } from "./dto/all-role.dto";
+import { ApiResponse } from "src/types";
 
 @Injectable()
 export class RoleService {
-  create(createRoleDto: CreateRoleDto) {
-    return 'This action adds a new role';
-  }
+  constructor(
+    @InjectRepository(Role)
+    private readonly roleRepo: MongoRepository<Role>
+  ) {}
 
-  findAll() {
-    return `This action returns all role`;
-  }
+  async findInviteRoles(): Promise<ApiResponse<any[]>> {
+    const roles = await this.roleRepo
+      .createCursor({
+        isInviteable: true,
+      })
+      .project({ name: 1, _id: 1 })
+      .toArray();
 
-  findOne(id: number) {
-    return `This action returns a #${id} role`;
+    return { data: roles, message: "Invitation Roles retrieved Successfully" };
   }
+  async findSignupRoles(): Promise<ApiResponse<any[]>> {
+    let roles = await this.roleRepo
+      .createCursor({
+        isSignUpAllowed: true,
+      })
+      .project({ name: 1, _id: 1 })
+      .toArray();
 
-  update(id: number, updateRoleDto: UpdateRoleDto) {
-    return `This action updates a #${id} role`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} role`;
+    return { data: roles, message: "Signup Roles retrieved Successfully" };
   }
 }

@@ -5,8 +5,8 @@ import { AuditService } from "./audit.service";
 export class AuditController {
   constructor(private readonly auditLogService: AuditService) {}
 
-  @Get()
-  async listAuditLogs(@Query() query: any) {
-    return await this.auditLogService.getLogs(query);
-  }
+  // @Get()
+  // async listAuditLogs(@Query() query: any) {
+  //   return await this.auditLogService.getLogs(query);
+  // }
 }

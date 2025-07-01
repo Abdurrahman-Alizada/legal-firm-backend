@@ -1,4 +1,4 @@
-import { ActionType, HttpMethod, PermissionCode } from "src/types";
+import { ActionType, HttpMethod, PermissionCode, RoleName } from "src/types";
 
 export const PERMISSION_SEED = [
   // ==== Cases ====
@@ -308,9 +308,10 @@ export const PERMISSION_SEED = [
 
 export const ROLE_SEED = [
   {
-    name: "Client",
+    name: RoleName.CLIENT,
     description: "Client with access to own cases and firm communication",
     isSignUpAllowed: true,
+    isInviteable: false,
     permissionCodes: [
       PermissionCode.CASE_READ,
       PermissionCode.DOCUMENT_CREATE,
@@ -320,7 +321,8 @@ export const ROLE_SEED = [
     ],
   },
   {
-    name: "Lawyer",
+    name: RoleName.LAWYER,
+    isInviteable: false,
     description:
       "Lawyer with full access to legal case workflows and firm management",
     isSignUpAllowed: true,
@@ -363,9 +365,10 @@ export const ROLE_SEED = [
     ],
   },
   {
-    name: "Paralegal",
+    name: RoleName.PARALEGAL,
     description: "Paralegal assisting with documents, calendar, and notes",
     isSignUpAllowed: false,
+    isInviteable: true,
     permissionCodes: [
       PermissionCode.CASE_READ,
 
@@ -386,8 +389,9 @@ export const ROLE_SEED = [
     ],
   },
   {
-    name: "Secretary",
+    name: RoleName.SECRETARY,
     description: "Secretary with calendar, document, and chat assistance",
+    isInviteable: true,
     isSignUpAllowed: false,
     permissionCodes: [
       PermissionCode.CASE_READ,
@@ -402,7 +406,8 @@ export const ROLE_SEED = [
     ],
   },
   {
-    name: "Admin",
+    name: RoleName.ADMIN,
+    isInviteable: false,
     isSignUpAllowed: false,
     description: "System-wide super admin with all permissions",
     permissionCodes: Object.values(PermissionCode),
