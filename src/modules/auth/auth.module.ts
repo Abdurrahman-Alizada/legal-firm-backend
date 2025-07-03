@@ -5,25 +5,32 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { User } from "../user/entities/user.entity";
 import { Role } from "../role/entities/role.entity";
 import { Permission } from "../permission/entities/permission.entity";
-import { APP_GUARD } from "@nestjs/core";
 import { GlobalPermissionGuard } from "src/common/guards/global-permission.guard";
 import { UserModule } from "../user/user.module";
 import { PassportModule } from "@nestjs/passport";
 import { JwtModule } from "@nestjs/jwt";
 import { JwtStrategy } from "src/common/strategies/jwt.strategy";
 import { JwtAuthGuard } from "src/common/guards/jwt.guard";
+import { Company } from "../company/entities/company.entity";
+import { MongoRepository } from "typeorm";
+import { ConfigModule, ConfigService } from "@nestjs/config";
+import { MailService } from "../email/email.service";
 
 @Module({
   imports: [
     PassportModule,
-    JwtModule.register({
-      secret: process.env.JWT_SECRET,
-      signOptions: { expiresIn: "1d" },
+    JwtModule.registerAsync({
+      imports: [ConfigModule],
+      useFactory: async (config: ConfigService) => ({
+        secret: config.get("JWT_SECRET"),
+        signOptions: { expiresIn: "7d" },
+      }),
+      inject: [ConfigService],
     }),
     UserModule,
-    TypeOrmModule.forFeature([Permission, Role]),
+    TypeOrmModule.forFeature([Permission, Role, Company, User]),
   ],
-  providers: [AuthService, GlobalPermissionGuard, JwtAuthGuard, JwtStrategy],
+  providers: [AuthService, GlobalPermissionGuard, JwtAuthGuard, JwtStrategy, MailService],
   controllers: [AuthController],
   exports: [AuthService],
 })

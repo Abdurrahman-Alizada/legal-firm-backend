@@ -8,13 +8,15 @@ export class User {
   @Column() name: string;
   @Column() email: string;
   @Column() password: string;
-  @Column() roleId: string; // references Role
+  @Column() roleId: ObjectId; // references Role
+
+  @Column({ default: false }) isPending: boolean; // references Role
 
   @Column({ nullable: true })
-  firmId?: ObjectId;
+  companyId: ObjectId;
 
   @Column({ default: false })
-  isFirmOwner: boolean;
+  isCompanyOwner: boolean;
 
   @CreateDateColumn() createdAt: Date;
 }
